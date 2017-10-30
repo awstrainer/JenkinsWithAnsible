@@ -1,0 +1,29 @@
+cat l.yml 
+---
+- hosts: loadbalancer
+  become: true
+  tasks:
+    - name: install nginx
+      apt: name=nginx state=present update_cache=yes
+ 
+    - name: ensure nginx started
+      service: name=nginx state=started enabled=yes
+
+
+jenkins@loadbalancer:/tmp$ cat dev
+[loadbalancer]
+loadbalancer ansible_connection=local
+
+
+Install Ansible Plugin
+
+In build, add playbook path, inventory path
+
+Since the job is running from jenkins user, so it fails with permission denied onto sudo, so add jenkins to sudoers file.
+ 
+Vissudo
+
+added following line
+jenkins ALL=(ALL:ALL) ALL
+ 
+
